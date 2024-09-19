@@ -7,7 +7,7 @@ pipeline {
         HARBOR_CREDENTIALS_ID = 'haonguyen87-harbor-id'
         DOCKER_IMAGE = 'hub.df.ggg.com.vn/php-library/php:8.2-fpm'
         GIT_REPO = 'https://github.com/haonh87/laravel-app.git'
-        GIT_BRANCH = 'develop'
+        GIT_BRANCH = '*/develop'
         ARGOCD_APP = 'laravel-app-develop'
         IMAGE_TAG = "laravel-app"
     }
