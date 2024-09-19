@@ -16,7 +16,11 @@ pipeline {
         // checkout branch
         stage('Checkout Source') {
             steps {
-                git branch: "${env.GIT_BRANCH}", url: "${env.GIT_REPO}"
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: "${env.GIT_BRANCH}"]],
+                    userRemoteConfigs: [[url: "${env.GIT_REPO}"]]
+                ])
             }
         }
 
