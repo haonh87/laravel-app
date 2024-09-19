@@ -25,11 +25,21 @@ pipeline {
         // push docker image to harbor
         stage('Build docker image & Push image to Harbor') {
             steps {
-                script {
-                    docker.withRegistry("http://${HARBOR_REGISTRY}", "${DOCKER_CREDENTIALS_ID}") {
-                        def appImage = docker.build("${IMAGE_TAG}:develop-${env.BUILD_NUMBER}", "-f Dockerfile .")
-                        appImage.push();
-                    }
+                script { 
+                    // build image
+                    sh """
+                    buildah bud -t ${HARBOR_REGISTRY}/${IMAGE_TAG}:develop-${env.BUILD_NUMBER} -f Dockerfile .
+                    """
+
+                    // push image
+                    sh """
+                    buildah push ${HARBOR_REGISTRY}/${IMAGE_TAG}:develop-${env.BUILD_NUMBER}
+                    """
+                    
+                    // docker.withRegistry("http://${HARBOR_REGISTRY}", "${DOCKER_CREDENTIALS_ID}") {
+                    //     def appImage = docker.build("${IMAGE_TAG}:develop-${env.BUILD_NUMBER}", "-f Dockerfile .")
+                    //     appImage.push();
+                    // }
                 }
             }
         }
