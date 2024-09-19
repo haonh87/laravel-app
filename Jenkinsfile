@@ -10,17 +10,14 @@ pipeline {
         GIT_BRANCH = '*/develop'
         ARGOCD_APP = 'laravel-app-develop'
         IMAGE_TAG = "laravel-app"
+        JENKINS_GIT_CREDENTIAL_ID='github-haonh87-token-id'
     }
 
     stages {
         // checkout branch
         stage('Checkout Source') {
             steps {
-                checkout([
-                    $class: 'GitSCM', 
-                    branches: [[name: "${env.GIT_BRANCH}"]],
-                    userRemoteConfigs: [[url: "${env.GIT_REPO}"]]
-                ])
+                git branch: "${env.GIT_BRANCH}", credentialsId: "${env.JENKINS_GIT_CREDENTIAL_ID}", url: "${env.GIT_REPO}"
             }
         }
 
