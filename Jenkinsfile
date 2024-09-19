@@ -9,7 +9,7 @@ pipleline {
         GIT_REPO = 'https://github.com/haonh87/laravel-app.git'
         GIT_BRANCH = 'develop'
         ARGOCD_APP = 'laravel-app-develop'
-        IMAGE_TAG = "${ARGOCD_APP}-${env.BUILD_NUMBER}"
+        IMAGE_TAG = "laravel-app"
     }
 
     stages {
@@ -26,7 +26,7 @@ pipleline {
             steps {
                 script {
                     docker.withRegistry("http://${HARBOR_REGISTRY}", "${DOCKER_CREDENTIALS_ID}") {
-                        def appImage = docker.build("${IMAGE_TAG}:${env.BUILD_TAG}", "-f Dockerfile .")
+                        def appImage = docker.build("${IMAGE_TAG}:develop-${env.BUILD_NUMBER}", "-f Dockerfile .")
                         appImage.push();
                     }
                 }
