@@ -20,13 +20,6 @@ spec:
     command:
     - /busybox/cat
     tty: true
-    resources:
-      requests:
-        memory: "1Gi"
-        cpu: "500m"
-      limits:
-        memory: "2Gi"
-        cpu: "1"
     volumeMounts:
       - name: jenkins-docker-cfg
         mountPath: /kaniko/.docker
@@ -66,14 +59,16 @@ spec:
         stage('Build with Kaniko') {
             steps {
                 container(name: 'kaniko', shell: '/busybox/sh') {
-                    sh '''
-                    /kaniko/executor \
-                        --context ${WORKSPACE} \
-                        --dockerfile ${WORKSPACE}/Dockerfile \
-                        --destination ${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_TAG}:develop-${env.BUILD_NUMBER} \
-                        --insecure-registry hub.df.ggg.com.vn \
-                        --insecure-pull
-                    '''
+                    withEnv(['PATH+EXTRA=/busybox']) {
+                        sh '''
+                        /kaniko/executor \
+                            --context ${WORKSPACE} \
+                            --dockerfile ${WORKSPACE}/Dockerfile \
+                            --destination ${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_TAG}:develop-${env.BUILD_NUMBER} \
+                            --insecure-registry hub.df.ggg.com.vn \
+                            --insecure-pull
+                        '''
+                    }
                 }
             }
         }
