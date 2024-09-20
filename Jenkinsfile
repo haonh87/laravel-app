@@ -60,7 +60,7 @@ spec:
                             ls -al $(pwd)
                         '''
                         sh '''#!/busybox/sh
-                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --insecure --insecure-registry${env.HARBOR_REGISTRY} --insecure-pull
+                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --insecure --insecure-registry ${env.HARBOR_REGISTRY} --insecure-pull
                         '''
                     }
                 }
