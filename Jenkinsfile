@@ -52,6 +52,8 @@ spec:
                 container(name: 'kaniko', shell: '/busybox/sh') {
                     withEnv(['PATH+EXTRA=/busybox']) {
                         sh '''
+                            echo $IMAGE_PUSH_DESTINATION
+                            echo $HARBOR_REGISTRY
                             cat /kaniko/.docker/config.json
                         '''
 
@@ -59,8 +61,9 @@ spec:
                             echo "Listing files in context directory:"
                             ls -al $(pwd)
                         '''
+
                         sh '''#!/busybox/sh
-                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --insecure --insecure-registry ${env.HARBOR_REGISTRY} --insecure-pull
+                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --insecure --insecure-registry $HARBOR_REGISTRY --insecure-pull
                         '''
                     }
                 }
