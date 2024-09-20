@@ -52,6 +52,9 @@ spec:
                 checkout scm
                 container(name: 'kaniko', shell: '/busybox/sh') {
                     withEnv(['PATH+EXTRA=/busybox']) {
+                        sh '''
+                            cat /kaniko/.docker/config.json
+                        '''
 
                         sh '''
                             echo "Listing files in context directory:"
