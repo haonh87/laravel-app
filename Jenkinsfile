@@ -1,5 +1,4 @@
 pipeline {
-    
     agent {
         kubernetes {
             defaultContainer 'kaniko'
@@ -23,12 +22,6 @@ spec:
     volumeMounts:
       - name: jenkins-docker-cfg
         mountPath: /kaniko/.docker
-  - name: debug
-    image: curlimages/curl:latest
-    command:
-    - sleep
-    args:
-    - "3600"
   volumes:
   - name: jenkins-docker-cfg
     projected:
@@ -43,7 +36,7 @@ spec:
     }
 
     environment {
-        HARBOR_REGISTRY = 'http://hub.df.ggg.com.vn'
+        HARBOR_REGISTRY = 'hub.df.ggg.com.vn'
         HARBOR_PROJECT = 'laravel-app'
         ARGOCD_APP = 'laravel-app-develop'
         IMAGE_TAG = "laravel"
@@ -56,14 +49,6 @@ spec:
         stage('Build with Kaniko') {
             steps {
                 checkout scm
-
-                container(name: 'debug') {
-                    sh '''
-                        echo "Testing connection to Harbor using debug container:"
-                        curl -v http://hub.df.ggg.com.vn/v2/
-                    '''
-                }
-
                 container(name: 'kaniko', shell: '/busybox/sh') {
                     withEnv(['PATH+EXTRA=/busybox']) {
                         sh '''
@@ -75,7 +60,7 @@ spec:
                             ls -al $(pwd)
                         '''
                         sh '''#!/busybox/sh
-                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --insecure --insecure-registry hub.df.ggg.com.vn --insecure-pull
+                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --insecure --insecure-registry${env.HARBOR_REGISTRY} --insecure-pull
                         '''
                     }
                 }
