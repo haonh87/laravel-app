@@ -39,33 +39,25 @@ spec:
     environment {
         HARBOR_REGISTRY = 'hub.df.ggg.com.vn'
         HARBOR_PROJECT = 'laravel-app'
-        HARBOR_CREDENTIALS_ID = 'haonguyen87-harbor-id'
-        GIT_REPO = 'https://github.com/haonh87/laravel-app.git'
-        GIT_BRANCH = 'develop'
         ARGOCD_APP = 'laravel-app-develop'
         IMAGE_TAG = "laravel-app"
-        JENKINS_GIT_CREDENTIAL_ID='github-haonh87-token-id'
+        IMAGE_PUSH_DESTINATION="${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_TAG}:develop-${env.BUILD_NUMBER}"
     }
 
     stages {
-        // checkout branch
-        stage('Checkout Source') {
-            steps {
-                git branch: "${env.GIT_BRANCH}", credentialsId: "${env.JENKINS_GIT_CREDENTIAL_ID}", url: "${env.GIT_REPO}"
-            }
-        }
 
         // build & push image
         stage('Build with Kaniko') {
             steps {
+                echo "${IMAGE_PUSH_DESTINATION}"
+                checkout scm
                 container(name: 'kaniko', shell: '/busybox/sh') {
                     withEnv(['PATH+EXTRA=/busybox']) {
                         sh '''
                         /kaniko/executor \
-                            --context ${WORKSPACE} \
-                            --dockerfile ${WORKSPACE}/Dockerfile \
-                            --destination ${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_TAG}:develop-${env.BUILD_NUMBER} \
-                            --insecure-registry hub.df.ggg.com.vn \
+                            --context `pwd` \
+                            --destination ${IMAGE_PUSH_DESTINATION} \
+                            --insecure --insecure-registry hub.df.ggg.com.vn \
                             --insecure-pull
                         '''
                     }
