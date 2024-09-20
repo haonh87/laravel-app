@@ -55,7 +55,7 @@ spec:
                     withEnv(['PATH+EXTRA=/busybox']) {
                         sh '''
                         /kaniko/executor \
-                            --context $(pwd) \
+                            --context `pwd` \
                             --destination ${IMAGE_PUSH_DESTINATION} \
                             --insecure --insecure-registry hub.df.ggg.com.vn \
                             --insecure-pull
