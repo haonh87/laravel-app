@@ -52,20 +52,13 @@ spec:
                 checkout scm
                 container(name: 'kaniko', shell: '/busybox/sh') {
                     withEnv(['PATH+EXTRA=/busybox']) {
-                        sh '''
-                        echo "Checking connection to Harbor:"
-                        curl -v http://hub.df.ggg.com.vn/v2/
-                        '''
 
                         sh '''
                             echo "Listing files in context directory:"
                             ls -al $(pwd)
-                            #!/busybox/sh
-                            /kaniko/executor \
-                            --context `pwd` \
-                            --destination ${IMAGE_PUSH_DESTINATION} \
-                            --insecure --insecure-registry hub.df.ggg.com.vn \
-                            --insecure-pull
+                        '''
+                        sh '''#!/busybox/sh
+                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --insecure --insecure-registry hub.df.ggg.com.vn --insecure-pull
                         '''
                     }
                 }
