@@ -53,6 +53,7 @@ spec:
                 container(name: 'kaniko', shell: '/busybox/sh') {
                     withEnv(['PATH+EXTRA=/busybox']) {
                         sh '''
+                            cat /etc/hosts
                             nslookup hub.df.ggg.com.vn
                             cat /kaniko/.docker/config.json
                         '''
