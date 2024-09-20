@@ -53,6 +53,11 @@ spec:
                 container(name: 'kaniko', shell: '/busybox/sh') {
                     withEnv(['PATH+EXTRA=/busybox']) {
                         sh '''
+                        echo "Checking connection to Harbor:"
+                        curl -v http://hub.df.ggg.com.vn/v2/
+                        '''
+
+                        sh '''
                             echo "Listing files in context directory:"
                             ls -al $(pwd)
                             #!/busybox/sh
