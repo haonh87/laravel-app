@@ -7,17 +7,17 @@ WORKDIR ${WORK_DIR}
 COPY ["./", "./"]
 
 # Install & update packages
-RUN composer install --no-scripts
+# RUN composer install --no-scripts
 
 # dump autoload
 #RUN composer dump-autoload
 
-RUN cp ${WORK_DIR}/.env.example ${WORK_DIR}/.env
+# RUN cp ${WORK_DIR}/.env.example ${WORK_DIR}/.env
 
-RUN php artisan key:generate && \
-    php artisan config:clear && \
-    php artisan route:clear && \
-    php artisan cache:clear
+# RUN php artisan key:generate && \
+#     php artisan config:clear && \
+#     php artisan route:clear && \
+#     php artisan cache:clear
 
 # Expose the correct port for PHP-FPM
 EXPOSE 9000
