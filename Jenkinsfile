@@ -15,7 +15,7 @@ spec:
     - "hub.df.ggg.com.vn"
   containers:
   - name: kaniko
-    image: gcr.io/kaniko-project/executor:v1.22.0
+    image: gcr.io/kaniko-project/executor:v1.22.0-debug
     imagePullPolicy: Always
     command:
     - /busybox/cat
@@ -55,23 +55,12 @@ spec:
                     withEnv(['PATH+EXTRA=/busybox']) {
                         sh '''
                         /kaniko/executor \
-                            --context `pwd` \
+                            --context $(pwd) \
                             --destination ${IMAGE_PUSH_DESTINATION} \
                             --insecure --insecure-registry hub.df.ggg.com.vn \
                             --insecure-pull
                         '''
                     }
-                }
-            }
-        }
-
-        // deploy to k8s cluster
-        stage('Deploy to K8S via ArgoCD') {
-            steps {
-                script {
-                    sh """
-                    argocd app sync ${ARGOCD_APP} --grpc-web
-                    """
                 }
             }
         }
