@@ -40,8 +40,8 @@ spec:
         HARBOR_REGISTRY = 'hub.df.ggg.com.vn'
         HARBOR_PROJECT = 'laravel-app'
         ARGOCD_APP = 'laravel-app-develop'
-        IMAGE_TAG = "laravel-app"
-        IMAGE_PUSH_DESTINATION="${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_TAG}:develop-${env.BUILD_NUMBER}"
+        IMAGE_TAG = "laravel"
+        IMAGE_PUSH_DESTINATION="${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_TAG}:${env.BUILD_NUMBER}-develop"
     }
 
     stages {
@@ -49,12 +49,14 @@ spec:
         // build & push image
         stage('Build with Kaniko') {
             steps {
-                echo "${IMAGE_PUSH_DESTINATION}"
                 checkout scm
                 container(name: 'kaniko', shell: '/busybox/sh') {
                     withEnv(['PATH+EXTRA=/busybox']) {
                         sh '''
-                        /kaniko/executor \
+                            echo "Listing files in context directory:"
+                            ls -al $(pwd)
+                            #!/busybox/sh
+                            /kaniko/executor \
                             --context `pwd` \
                             --destination ${IMAGE_PUSH_DESTINATION} \
                             --insecure --insecure-registry hub.df.ggg.com.vn \
