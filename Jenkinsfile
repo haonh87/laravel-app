@@ -57,6 +57,9 @@ spec:
 
 
                         sh '''#!/busybox/sh
+                            export GIT_HTTP_TIMEOUT=300
+                            export DOCKER_CLIENT_TIMEOUT=300
+                            
                             /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --skip-tls-verify-pull --skip-tls-verify
                         '''
                     }
