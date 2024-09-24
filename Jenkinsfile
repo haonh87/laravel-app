@@ -57,7 +57,7 @@ spec:
 
 
                         sh '''#!/busybox/sh
-                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --insecure-registry hub.df.ggg.com.vn --insecure-pull --insecure --skip-tls-verify --cache=true
+                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --skip-tls-verify --cache=true
                         '''
                     }
                 }
