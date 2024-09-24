@@ -57,10 +57,7 @@ spec:
 
 
                         sh '''#!/busybox/sh
-                            export GIT_HTTP_TIMEOUT=300
-                            export DOCKER_CLIENT_TIMEOUT=300
-
-                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --insecure --skip-tls-verify-pull --skip-tls-verify --cache=true
+                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --insecure-registry hub.df.ggg.com.vn --insecure-pull --insecure --skip-tls-verify --cache=true
                         '''
                     }
                 }
