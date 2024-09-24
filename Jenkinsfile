@@ -53,13 +53,8 @@ spec:
                         sh '''
                             echo $IMAGE_PUSH_DESTINATION
                             echo $HARBOR_REGISTRY
-                            cat /kaniko/.docker/config.json
                         '''
 
-                        sh '''
-                            echo "Listing files in context directory:"
-                            ls -al $(pwd)
-                        '''
 
                         sh '''#!/busybox/sh
                             /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --skip-tls-verify-pull --skip-tls-verify
