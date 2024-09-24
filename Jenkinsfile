@@ -38,7 +38,6 @@ spec:
     environment {
         HARBOR_REGISTRY = 'hub.df.ggg.com.vn'
         HARBOR_PROJECT = 'laravel-app'
-        ARGOCD_APP = 'laravel-app-develop'
         IMAGE_TAG = "laravel"
         IMAGE_PUSH_DESTINATION="${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_TAG}:${env.BUILD_NUMBER}-develop"
     }
@@ -63,7 +62,7 @@ spec:
                         '''
 
                         sh '''#!/busybox/sh
-                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --insecure --insecure-registry $HARBOR_REGISTRY --insecure-pull
+                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --skip-tls-verify-pull --skip-tls-verify
                         '''
                     }
                 }
