@@ -39,7 +39,7 @@ spec:
         HARBOR_REGISTRY = 'hub.df.ggg.com.vn'
         HARBOR_PROJECT = 'laravel-app'
         IMAGE_TAG = "laravel"
-        IMAGE_PUSH_DESTINATION="${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_TAG}:${env.BUILD_NUMBER}-develop"
+        IMAGE_PUSH_DESTINATION="${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_TAG}:latest"
     }
 
     stages {
