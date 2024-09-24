@@ -1,4 +1,4 @@
-FROM hub.df.ggg.com.vn/php-library/php:8.2-fpm
+FROM hub.df.ggg.com.vn/php-library/php8:latest
 
 ENV WORK_DIR /var/www/html
 
@@ -20,4 +20,4 @@ COPY ["./", "./"]
 #     php artisan cache:clear
 
 # Expose the correct port for PHP-FPM
-EXPOSE 9000
+# EXPOSE 9000
