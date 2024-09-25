@@ -12,6 +12,7 @@ spec:
   - ip: "192.168.201.49"
     hostnames:
     - "hub.df.ggg.com.vn"
+  hostNetwork: true
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:v1.22.0-debug
