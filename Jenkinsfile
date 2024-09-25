@@ -9,9 +9,9 @@ metadata:
   name: kaniko
 spec:
   hostAliases:
-  - ip: "192.168.201.49"
+  - ip: "192.168.221.203"
     hostnames:
-    - "hub.df.ggg.com.vn"
+    - "hub.lakehouse.ggg.com.vn"
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:v1.22.0-debug
