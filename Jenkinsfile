@@ -9,9 +9,9 @@ metadata:
   name: kaniko
 spec:
   hostAliases:
-  - ip: "192.168.221.203"
+  - ip: "192.168.201.49"
     hostnames:
-    - "hub.lakehouse.ggg.com.vn"
+    - "hub.df.ggg.com.vn"
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:v1.22.0-debug
@@ -49,10 +49,15 @@ spec:
                 container(name: 'kaniko', shell: '/busybox/sh') {
                     withEnv(['PATH+EXTRA=/busybox']) {
                         sh '''
+                            echo HOST:
                             cat /etc/hosts
+                            echo RESOLV:
+                            cat /etc/resolv.conf
+                            echo IP ROUTE:
+                            ip route
                             echo "Checking connection to Harbor..."
-                            /busybox/ping -c 3 hub.lakehouse.ggg.com.vn || true
-                            /busybox/wget http://lakehouse.df.ggg.com.vn/v2/ --no-check-certificate || true
+                            /busybox/ping -c 3 hub.df.ggg.com.vn || true
+                            /busybox/wget https://hub.df.ggg.com.vn/v2/ --no-check-certificate || true
                         '''
                     }
                 }
