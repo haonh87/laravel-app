@@ -51,8 +51,8 @@ spec:
                         sh '''
                             cat /etc/hosts
                             echo "Checking connection to Harbor..."
-                            /busybox/ping -c 3 hub.df.ggg.com.vn || true
-                            /busybox/wget https://hub.df.ggg.com.vn/v2/ --no-check-certificate || true
+                            /busybox/ping -c 3 hub.lakehouse.ggg.com.vn || true
+                            /busybox/wget http://lakehouse.df.ggg.com.vn/v2/ --no-check-certificate || true
                         '''
                     }
                 }
