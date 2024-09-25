@@ -44,9 +44,7 @@ spec:
 
     stages {
 
-        // build & push image
-        stage('Build with Kaniko') {
-            stage('Check Harbor Connection') {
+        stage('Check Harbor Connection') {
             steps {
                 container(name: 'kaniko', shell: '/busybox/sh') {
                     withEnv(['PATH+EXTRA=/busybox']) {
@@ -58,6 +56,10 @@ spec:
                     }
                 }
             }
+        }
+
+        // build & push image
+        stage('Build with Kaniko') {
 
             steps {
                 checkout scm
@@ -67,7 +69,8 @@ spec:
                         sh '''
                             echo DESTINATION PATH: $IMAGE_PUSH_DESTINATION
                             echo HARBOR PATH: $HARBOR_REGISTRY
-                            echo CURRENT PATH: `pwd`
+                            echo LS:
+                            ls -la `pwd`
                         '''
 
 
