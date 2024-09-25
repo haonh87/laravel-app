@@ -51,13 +51,17 @@ spec:
                 container(name: 'kaniko', shell: '/busybox/sh') {
                     withEnv(['PATH+EXTRA=/busybox']) {
                         sh '''
-                            echo $IMAGE_PUSH_DESTINATION
-                            echo $HARBOR_REGISTRY
+                            echo DESTINATION PATH: $IMAGE_PUSH_DESTINATION
+                            echo HARBOR PATH: $HARBOR_REGISTRY
+                            echo CURRENT PATH: `pwd`
                         '''
 
 
                         sh '''#!/busybox/sh
-                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION
+                            /kaniko/executor --context `pwd` \
+                            --dockerfile `pwd`/Dockerfile \
+                            --destination $IMAGE_PUSH_DESTINATION \
+                            --skip-tls-verify
                         '''
                     }
                 }
