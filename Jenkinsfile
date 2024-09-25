@@ -12,7 +12,6 @@ spec:
   - ip: "192.168.201.49"
     hostnames:
     - "hub.df.ggg.com.vn"
-  hostNetwork: true
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:v1.22.0-debug
@@ -57,6 +56,7 @@ spec:
                             echo IP ROUTE:
                             ip route
                             echo "Checking connection to Harbor..."
+                            /busybox/ping -c 3 192.168.201.49 || true
                             /busybox/ping -c 3 hub.df.ggg.com.vn || true
                             /busybox/wget https://hub.df.ggg.com.vn/v2/ --no-check-certificate || true
                         '''
