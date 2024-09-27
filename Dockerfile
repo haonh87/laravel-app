@@ -12,9 +12,9 @@ RUN cp ${WORK_DIR}/.env.example ${WORK_DIR}/.env
 RUN composer install --no-dev --optimize-autoloader
 
 # Permissions
-RUN chown -R www-data:www-data /var/www \
-    && chmod -R 775 /var/www/storage \
-    && chmod -R 775 /var/www/bootstrap/cache
+RUN chown -R www-data:www-data ${WORK_DIR} \
+    && chmod -R 775 ${WORK_DIR}/storage \
+    && chmod -R 775 ${WORK_DIR}/bootstrap/cache
 
 COPY ./docker/configs/www.conf /usr/local/etc/php-fpm.d/www.conf
 
