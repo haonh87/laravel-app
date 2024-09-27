@@ -1,4 +1,4 @@
-FROM hub.df.ggg.com.vn/php-library/php8:latest
+FROM hub.df.ggg.com.vn/php-library/php:8.2-fpm
 
 ENV WORK_DIR /var/www/html
 
