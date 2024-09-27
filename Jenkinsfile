@@ -44,27 +44,6 @@ spec:
 
     stages {
 
-        stage('Check Harbor Connection') {
-            steps {
-                container(name: 'kaniko', shell: '/busybox/sh') {
-                    withEnv(['PATH+EXTRA=/busybox']) {
-                        sh '''
-                            echo HOST:
-                            cat /etc/hosts
-                            echo RESOLV:
-                            cat /etc/resolv.conf
-                            echo IP ROUTE:
-                            ip route
-                            echo "Checking connection to Harbor..."
-                            /busybox/ping -c 3 192.168.201.49 || true
-                            /busybox/ping -c 3 hub.df.ggg.com.vn || true
-                            /busybox/wget https://hub.df.ggg.com.vn/v2/ --no-check-certificate || true
-                        '''
-                    }
-                }
-            }
-        }
-
         // build & push image
         stage('Build with Kaniko') {
 
@@ -72,14 +51,6 @@ spec:
                 checkout scm
                 container(name: 'kaniko', shell: '/busybox/sh') {
                     withEnv(['PATH+EXTRA=/busybox']) {
-
-                        sh '''
-                            echo DESTINATION PATH: $IMAGE_PUSH_DESTINATION
-                            echo HARBOR PATH: $HARBOR_REGISTRY
-                            echo LS:
-                            ls -la `pwd`
-                        '''
-
 
                         sh '''#!/busybox/sh
                             /kaniko/executor --context `pwd` \
