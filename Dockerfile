@@ -2,6 +2,8 @@ FROM hub.df.ggg.com.vn/php-library/laravel:php8.2-fpm
 
 ENV WORK_DIR /var/www/html
 
+COPY ./docker/configs/www.conf /usr/local/etc/php-fpm.d/www.conf
+
 WORKDIR ${WORK_DIR}
 
 COPY . .
