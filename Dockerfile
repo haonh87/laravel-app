@@ -1,8 +1,6 @@
-FROM hub.df.ggg.com.vn/php-library/laravel:php8.2-fpm
+FROM hub.df.ggg.com.vn/php-library/php:8.2-fpm
 
 ENV WORK_DIR /var/www/html
-
-COPY ./docker/configs/www.conf /usr/local/etc/php-fpm.d/www.conf
 
 WORKDIR ${WORK_DIR}
 
@@ -22,11 +20,4 @@ RUN cp ${WORK_DIR}/.env.example ${WORK_DIR}/.env
 # Generate key
 RUN php artisan key:generate
 
-# RUN php artisan key:generate && \
-#     php artisan config:clear && \
-#     php artisan route:clear && \
-#     php artisan cache:clear
-
-# Expose port 9000 and start PHP-FPM server
 EXPOSE 9000
-CMD ["php-fpm"]
